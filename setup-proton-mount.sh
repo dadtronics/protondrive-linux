@@ -25,7 +25,7 @@ ExecStart=rclone mount $REMOTE_NAME: $MOUNT_POINT \\
     --vfs-cache-mode writes \\
     --vfs-cache-max-size 500M \\
     --vfs-cache-max-age 1h \\
-    --dir-cache-time 12h \\
+    --dir-cache-time 5m \\
     --poll-interval 1m \\
     --log-level INFO \\
     --log-file $LOG_FILE \\
