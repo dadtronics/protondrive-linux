@@ -45,8 +45,14 @@ if ! grep -q "^user_allow_other" /etc/fuse.conf 2>/dev/null; then
     sudo sh -c 'echo "user_allow_other" >> /etc/fuse.conf'
 fi
 
-# Step 4: Add user to fuse group if not already
-if ! groups | grep -qw fuse; then
+# Step 4a: Check if the fuse group exists, create if not
+if ! cat /etc/group | grep -qw 'fuse'; then
+    echo "[+] Creating 'fuse' group (requires sudo)..."
+    sudo groupadd fuse
+fi
+
+# Step 4b: Add user to fuse group if not already
+if ! groups "$USER" | grep -qw fuse; then
     echo "[+] Adding user to 'fuse' group (requires sudo)..."
     sudo usermod -aG fuse "$USER"
     echo "[!] Please log out and back in for group changes to apply."
