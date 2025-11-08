@@ -4,7 +4,6 @@
 REMOTE_NAME="proton"
 MOUNT_POINT="$HOME/ProtonDrive"
 SYSTEMD_UNIT="$HOME/.config/systemd/user/rclone-proton.mount.service"
-RCLONE_BIN="/usr/local/bin/rclone"
 LOG_DIR="$HOME/.cache/rclone"
 LOG_FILE="$LOG_DIR/rclone-proton.log"
 
@@ -22,7 +21,7 @@ Wants=network-online.target
 
 [Service]
 Type=notify
-ExecStart=$RCLONE_BIN mount $REMOTE_NAME: $MOUNT_POINT \\
+ExecStart=rclone mount $REMOTE_NAME: $MOUNT_POINT \\
     --vfs-cache-mode writes \\
     --vfs-cache-max-size 500M \\
     --vfs-cache-max-age 1h \\
