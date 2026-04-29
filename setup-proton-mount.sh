@@ -4,7 +4,6 @@
 REMOTE_NAME="proton"
 MOUNT_POINT="$HOME/ProtonDrive"
 SYSTEMD_UNIT="$HOME/.config/systemd/user/rclone-proton.mount.service"
-RCLONE_BIN="/usr/local/bin/rclone"
 LOG_DIR="$HOME/.cache/rclone"
 LOG_FILE="$LOG_DIR/rclone-proton.log"
 
@@ -22,11 +21,11 @@ Wants=network-online.target
 
 [Service]
 Type=notify
-ExecStart=$RCLONE_BIN mount $REMOTE_NAME: $MOUNT_POINT \\
+ExecStart=rclone mount $REMOTE_NAME: $MOUNT_POINT \\
     --vfs-cache-mode writes \\
     --vfs-cache-max-size 500M \\
     --vfs-cache-max-age 1h \\
-    --dir-cache-time 12h \\
+    --dir-cache-time 5m \\
     --poll-interval 1m \\
     --log-level INFO \\
     --log-file $LOG_FILE \\
@@ -46,8 +45,14 @@ if ! grep -q "^user_allow_other" /etc/fuse.conf 2>/dev/null; then
     sudo sh -c 'echo "user_allow_other" >> /etc/fuse.conf'
 fi
 
-# Step 4: Add user to fuse group if not already
-if ! groups | grep -qw fuse; then
+# Step 4a: Check if the fuse group exists, create if not
+if ! cat /etc/group | grep -qw 'fuse'; then
+    echo "[+] Creating 'fuse' group (requires sudo)..."
+    sudo groupadd fuse
+fi
+
+# Step 4b: Add user to fuse group if not already
+if ! groups "$USER" | grep -qw fuse; then
     echo "[+] Adding user to 'fuse' group (requires sudo)..."
     sudo usermod -aG fuse "$USER"
     echo "[!] Please log out and back in for group changes to apply."

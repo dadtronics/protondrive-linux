@@ -104,6 +104,16 @@ systemctl --user status rclone-proton.mount.service
 
 ---
 
+## 🔁 Remount
+
+If unmounted the Proton Drive can be remounted by:
+
+```bash
+systemctl --user restart rclone-proton.mount.service
+```
+
+Note the Proton Drive is mounted each time you login automatically.
+
 ## 🧼 Uninstall
 
 To remove the auto-mount setup:
