@@ -20,10 +20,14 @@ Tested on **Arch Linux**, but should work on most Linux distributions with minor
 ### 1. ✅ Install Dependencies
 
 #### Install `fuse3` (required for mounting):
+Arch
 ```bash
 sudo pacman -S fuse3
 ````
-
+Debian
+```bash
+sudo apt install fuse3
+````
 #### Install `rclone` (must be v1.64.0 or newer)
 
 🔹 **Option 1: Use precompiled binary (recommended)**
