@@ -65,7 +65,13 @@ Follow prompts:
 
 ### 3. 📜 Run Setup Script
 
-Run the provided script:
+Download the **raw** script (using "Save As" on the rendered GitHub page will save an HTML file, not the script, and will fail with syntax errors):
+
+```bash
+curl -O https://raw.githubusercontent.com/dadtronics/protondrive-linux/main/setup-proton-mount.sh
+```
+
+Then run it:
 
 ```bash
 chmod +x setup-proton-mount.sh
